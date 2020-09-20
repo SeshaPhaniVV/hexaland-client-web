@@ -24,6 +24,9 @@
           ></b-input>
         </b-input-group>
       </b-form-group>
+
+      <div v-if="isGetNeighborAction" class="mb-3">Neighbors: {{ neighbors }}</div>
+
       <b-form-group id="input-group-2" v-if="isAddAction">
         <b-form-select v-model="position" :options="positions" required></b-form-select>
         <slot name="description">
@@ -42,8 +45,16 @@
       <b-button v-if="isAddAction" variant="primary" class="align-items-lg-center" @click="onSave">
         Save
       </b-button>
-      <b-button v-else variant="danger" class="align-items-lg-center" @click="onDelete">
+      <b-button
+        v-else-if="isDeleteAction"
+        variant="danger"
+        class="align-items-lg-center"
+        @click="onDelete"
+      >
         Delete
+      </b-button>
+      <b-button v-else variant="primary" class="align-items-lg-center" @click="getNeighbors">
+        Get Neighbors
       </b-button>
     </b-form>
   </div>
@@ -56,17 +67,32 @@ export default {
   name: 'ActionCard',
   data() {
     return {
-      actions: ['Add', 'Delete'],
+      actions: ['Add', 'Delete', 'Get Neighbors'],
       action: 'Add',
       position: 0,
       positions: [0, 1, 2, 3, 4, 5],
       name: null,
       neighbor: null,
+      neighbors: [],
+      positionMap: {
+        0: [0, -1],
+        1: [1, -1],
+        2: [1, 0],
+        3: [0, 1],
+        4: [-1, 1],
+        5: [-1, 0],
+      },
     };
   },
   computed: {
     isAddAction() {
       return this.action === 'Add';
+    },
+    isDeleteAction() {
+      return this.action === 'Delete';
+    },
+    isGetNeighborAction() {
+      return this.action === 'Get Neighbors';
     },
   },
   methods: {
@@ -108,6 +134,43 @@ export default {
         if (response.data.statusCode === 200) {
           this.$toastr.s('Data successfully deleted');
           this.$emit('refresh-data');
+        }
+      } catch (e) {
+        this.$toastr.e(e.response.data.error.description);
+      }
+    },
+    getPosition(original, neighbor) {
+      original = original.split(',');
+      for (let i = 0; i < 6; i++) {
+        const adders = this.positionMap[i];
+        const hexX = Number(original[0]);
+        const hexY = Number(original[1]);
+        const newX = hexX + adders[0];
+        const newY = hexY + adders[1];
+
+        if (`${newX},${newY}` === neighbor) {
+          return i;
+        }
+      }
+    },
+    async getNeighbors() {
+      if (!this.name) {
+        this.$toastr.e('Please fill in the required details');
+        return;
+      }
+
+      try {
+        const response = await HexaLandService.getHexagon(this.name, { include_neighbors: true });
+
+        if (response.data.statusCode === 200) {
+          this.$toastr.s('Neighbors successfully retrieved');
+          const hexagon = response.data.data.hexagon;
+          const neighbors = response.data.data.neighbors;
+
+          this.neighbors = neighbors.map((hex) => {
+            const pos = this.getPosition(hexagon.coords, hex.coords);
+            return [hex.name, pos];
+          });
         }
       } catch (e) {
         this.$toastr.e(e.response.data.error.description);

@@ -9,13 +9,13 @@ export class HexaLandService extends BaseService {
   /**
    * Get a Hexagon Details.
    *
-   * @param id
+   * @param name
    * @param params
    *
    * @returns {Promise<*>}
    */
-  getHexagon(id, params) {
-    return this.getData(`${id}`, params);
+  getHexagon(name, params) {
+    return this.getData(`${name}`, params);
   }
 
   /**
