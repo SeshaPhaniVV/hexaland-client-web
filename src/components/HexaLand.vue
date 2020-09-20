@@ -34,11 +34,9 @@ export default {
         coords.push(hex.name);
         return coords;
       });
-      console.log({ h: this.hexagons });
       this.loadingData = false;
     },
     refreshData() {
-      console.log('refreshed');
       this.loadingData = true;
       this.initialise();
     },

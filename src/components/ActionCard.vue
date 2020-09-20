@@ -97,7 +97,6 @@ export default {
       }
     },
     async onDelete() {
-      console.log({ n: this.name });
       if (!this.name) {
         this.$toastr.e('Please fill in the required details');
         return;

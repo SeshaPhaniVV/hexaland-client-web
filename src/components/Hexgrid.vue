@@ -4,7 +4,7 @@
     <hex-grid width="100%" height="100%" viewBox="-100 -100 300 400">
       <layout :size="hexagonSize" :flat="true" :spacing="1" :origin="{ x: 50, y: 50 }">
         <hexagon v-for="(hex, i) in moreHexas" :key="i" :q="hex.q" :r="hex.r" :s="hex.s">
-          <TextComponent>{{ hex.q }} {{ hex.r }} {{ hex.name }}</TextComponent>
+          <TextComponent>{{ hex.name }}</TextComponent>
         </hexagon>
       </layout>
     </hex-grid>
@@ -37,16 +37,6 @@ export default {
       },
       moreHexas: null,
     };
-  },
-  static: {
-    positionMap: {
-      0: [0, -1],
-      1: [1, -1],
-      2: [1, 0],
-      3: [0, 1],
-      4: [-1, 1],
-      5: [-1, 0],
-    },
   },
   created() {
     this.moreHexas = this.hexagons.map((hex) => new Hex(Number(hex[0]), Number(hex[1]), 1, hex[2]));
@@ -88,16 +78,5 @@ svg {
 
 .hex-grid {
   text-align: center;
-}
-
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  -moz-user-drag: element;
-  -webkit-user-drag: element;
-  -khtml-user-drag: element;
-  user-drag: element;
 }
 </style>
