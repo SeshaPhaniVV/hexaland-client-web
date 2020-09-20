@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActionCard test render should render and match the snapshot 1`] = `
+<div>
+  <div
+    class="font-weight-bold text-center mb-2"
+  >
+    Perform Action
+  </div>
+   
+  <b-form>
+    <b-form-group
+      description="Add a new hexagon"
+      id="input-group-1"
+      label-for="input-3"
+    >
+      <b-form-select
+        id="input-1"
+        options="Add,Delete"
+        required=""
+      />
+    </b-form-group>
+     
+    <b-form-group
+      description="Name of the hexagon"
+    >
+      <label
+        class="sr-only"
+        for="inline-form-input-name"
+      >
+        Name
+      </label>
+       
+      <b-input
+        class="mb-2 mr-sm-2 mb-sm-0"
+        id="inline-form-input-name"
+        placeholder="Name"
+      />
+    </b-form-group>
+     
+    <b-form-group
+      description="Name of the neighbor hexagon"
+    >
+      <label
+        class="sr-only"
+        for="inline-form-input-neighbor"
+      >
+        Neighbor
+      </label>
+       
+      <b-input-group
+        class="mb-2 mr-sm-2 mb-sm-0"
+      >
+        <b-input
+          id="inline-form-input-neighbor"
+          placeholder="Neighbor"
+        />
+      </b-input-group>
+    </b-form-group>
+     
+    <b-form-group
+      description="Position to which hexagon is attached to its neighbor"
+      id="input-group-2"
+    >
+      <b-form-select
+        options="0,1,2,3,4,5"
+        required=""
+      />
+    </b-form-group>
+     
+    <b-button
+      class="align-items-lg-center"
+      variant="primary"
+    >
+      
+      Save
+    
+    </b-button>
+  </b-form>
+</div>
+`;
