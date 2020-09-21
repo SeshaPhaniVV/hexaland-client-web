@@ -1,13 +1,5 @@
 # Hexaland Web Client
 
-#
-```
-            
-Diagram 1.1: Numbering                Diagram 1.2: Sample cluster      Diagram 1.3: Sample cluster        Diagram 1.4
-Convention of Hexagon’s borders
-
-```
-
 
 ## Project setup
 ```
